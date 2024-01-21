@@ -51,3 +51,7 @@ The bot works with the help of a Django REST API
 - The telegram bot is connected to the Django API by webhooks
 - It sends the information to the Azure server through the API requests 
 - The Django API queried data from the PostgreSQL DB on Azure and returns the data it in a structured for via message on telegram
+
+
+### Airflow workflow description
+![Alt text](/img/image.png)
