@@ -1,0 +1,12 @@
+{
+    "https://www.bbc.com/news": {
+        "articles": {
+            "selector": ".gs-c-promo-heading",
+            "withBaseName": false,
+            "attribute": true
+        },
+        "attributes":{
+            "title" : "head > title" 
+        }
+    }
+}
