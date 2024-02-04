@@ -22,9 +22,10 @@ class BaseScraper:
             value = self._soup.select_one(selector).text
             self.result[attribute] = value
 
-    def writeResults(self):
-        with open("scraper/results/scraperResults.json","a+") as resultHandle:
-            resultHandle.write(json.dumps(self.result, indent=4))
+    def writeResults(self, articleResult: list) ->  list:
+        articleResult.append(self.result)
+        return articleResult
+
 
     def _setResult(self) -> dict:
         result: dict = {}

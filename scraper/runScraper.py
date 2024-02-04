@@ -1,6 +1,6 @@
 import json
 import requests
-from scraper.BaseScraper.BaseScraper import BaseScraper
+from BaseScraper.BaseScraper import BaseScraper
 from urllib.parse import urljoin
 from bs4 import BeautifulSoup
 
@@ -22,10 +22,17 @@ def getAllArticles(Outletscraper: BaseScraper) -> list: #TODO maybe method can b
 
 
 def parseArticles(config, articles): #TODO Maybe method can be moved to the base class
+    with open("scraper/results/scraperResults.json","r") as resultHandle:
+            try:
+                articleResult = json.load(resultHandle)
+            except ValueError:
+                articleResult = []
     for article in articles:
         articleScraper = BaseScraper(article, config)
         articleScraper.getAttributes()
-        articleScraper.writeResults()
+        articleScraper.writeResults(articleResult)
+    with open("scraper/results/scraperResults.json", "w") as resultHandle:
+        resultHandle.write(json.dumps(articleResult, indent= 4))
     
 
 if __name__ == '__main__':
