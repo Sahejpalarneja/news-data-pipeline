@@ -1,4 +1,14 @@
 {
+    "https://www.nbcnews.com/":{
+        "articles": {
+            "selector": ".storyline__headline > a",
+            "withBaseName": true,
+            "attribute": true
+        },
+        "attributes":{
+            "title": "head > title"
+        }
+    },
     "https://www.bbc.com/news": {
         "articles": {
             "selector": ".gs-c-promo-heading",
@@ -9,4 +19,5 @@
             "title" : "head > title" 
         }
     }
+    
 }

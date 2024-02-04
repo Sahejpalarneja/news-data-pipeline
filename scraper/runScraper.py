@@ -22,15 +22,18 @@ def getAllArticles(Outletscraper: BaseScraper) -> list: #TODO maybe method can b
 
 
 def parseArticles(config, articles): #TODO Maybe method can be moved to the base class
-    with open("scraper/results/scraperResults.json","r") as resultHandle:
-            try:
-                articleResult = json.load(resultHandle)
-            except ValueError:
-                articleResult = []
-    for article in articles:
-        articleScraper = BaseScraper(article, config)
-        articleScraper.getAttributes()
-        articleScraper.writeResults(articleResult)
+    with open("scraper/results/scraperResults.json", "r") as resultHandle:
+        try:
+            articleResult = json.load(resultHandle)
+        except ValueError:
+            articleResult = []
+        count = 0
+        for article in articles:
+            articleScraper = BaseScraper(article, config)
+            articleScraper.getAttributes()
+            articleScraper.writeResults(articleResult)
+            count += 1
+            print(f"{count}/{len(articles)} articles scraped for {articleScraper.URL}")
     with open("scraper/results/scraperResults.json", "w") as resultHandle:
         resultHandle.write(json.dumps(articleResult, indent= 4))
     
