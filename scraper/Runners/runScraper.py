@@ -36,7 +36,7 @@ def parseArticles(config, articles): #TODO Maybe method can be moved to the base
             print(f"{count}/{len(articles)} articles scraped for {articleScraper.URL}")
     with open("scraper/results/scraperResults.json", "w") as resultHandle:
         resultHandle.write(json.dumps(articleResult, indent= 4))
-    
+
 
 if __name__ == '__main__':
     for url, config in config.items():
