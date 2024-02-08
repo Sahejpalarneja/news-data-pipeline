@@ -1,4 +1,15 @@
 {
+    "https://www.bbc.com/news": {
+        "articles": {
+            "selector": ".gs-c-promo-heading",
+            "withBaseName": false,
+            "attribute": true
+        },
+        "attributes": {
+            "title" : "head > title" 
+        },
+        "cleaner": "BBCCleaner"
+    },
     "https://www.nbcnews.com/":{
         "articles": {
             "selector": ".storyline__headline > a",
@@ -7,16 +18,6 @@
         },
         "attributes":{
             "title": "head > title"
-        }
-    },
-    "https://www.bbc.com/news": {
-        "articles": {
-            "selector": ".gs-c-promo-heading",
-            "withBaseName": false,
-            "attribute": true
-        },
-        "attributes":{
-            "title" : "head > title" 
         }
     }
     
