@@ -19,7 +19,10 @@ class BaseScraper:
         self.result["URL"] = self.URL
         for attribute in attributes.keys():
             selector = attributes[attribute]
-            value = self._soup.select_one(selector).text
+            try:
+                value = self._soup.select_one(selector).text
+            except:
+                value = ''
             self.result[attribute] = value
 
     def writeResults(self, articleResult: list) ->  list:
