@@ -11,7 +11,7 @@ class BaseScraper:
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246"
         }
         response = requests.get(URL, headers=headers)
-        self._soup = BeautifulSoup(response.text, parser="html.parser")
+        self._soup = BeautifulSoup(response.text, "html.parser")
         self.result: dict = self._setResult()
 
     def getAttributes(self):

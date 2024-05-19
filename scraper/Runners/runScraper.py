@@ -1,11 +1,15 @@
 import json
-import requests
-from BaseScraper.BaseScraper import BaseScraper
+import os
+import sys
+
+SCRIPT_DIR = os.path.dirname(os.path.dirname(__file__))
+sys.path.append(os.path.dirname(SCRIPT_DIR))
+
+from scraper.BaseScraper.BaseScraper import BaseScraper
 from urllib.parse import urljoin
-from bs4 import BeautifulSoup
 
-
-configPath: str = 'scraper\config\scraperConfig.json'
+ 
+configPath: str = '.\scraper\config\scraperConfig.json'
 configHandle = open(configPath, 'r').read()
 config: dict =  json.loads(configHandle)
 
@@ -22,18 +26,21 @@ def getAllArticles(Outletscraper: BaseScraper) -> list: #TODO maybe method can b
 
 
 def parseArticles(config, articles): #TODO Maybe method can be moved to the base class
-    with open("scraper/results/scraperResults.json", "r") as resultHandle:
+    try:
+        resultHandle = open("scraper/results/scraperResults.json", "r")
         try:
             articleResult = json.load(resultHandle)
-        except ValueError:
+        except Exception:
             articleResult = []
-        count = 0
-        for article in articles:
-            articleScraper = BaseScraper(article, config)
-            articleScraper.getAttributes()
-            articleScraper.writeResults(articleResult)
-            count += 1
-            print(f"{count}/{len(articles)} articles scraped for {articleScraper.URL}")
+    except FileNotFoundError:
+        articleResult = []
+    count = 0
+    for article in articles:
+        articleScraper = BaseScraper(article, config)
+        articleScraper.getAttributes()
+        articleScraper.writeResults(articleResult)
+        count += 1
+        print(f"{count}/{len(articles)} articles scraped for {articleScraper.URL}")
     with open("scraper/results/scraperResults.json", "w") as resultHandle:
         resultHandle.write(json.dumps(articleResult, indent= 4))
 
