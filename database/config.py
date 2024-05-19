@@ -1,6 +1,5 @@
 from configparser import ConfigParser
 import os
-import sqlalchemy as sa
 import psycopg2
 
 
