@@ -1,14 +1,14 @@
 {
-    "https://www.bbc.com/news": {
+    "https://www.newsweek.com/": {
         "articles": {
-            "selector": ".gs-c-promo-heading",
+            "selector": ".news-title > a",
             "withBaseName": false,
             "attribute": true
         },
         "attributes": {
-            "title" : "head > title" 
+            "title" : ".article-header > h1" 
         },
-        "cleaner": "BBCCleaner"
+        "cleaner": "NewsWeekCleaner"
     },
     "https://www.nbcnews.com/":{
         "articles": {

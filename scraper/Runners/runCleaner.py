@@ -14,7 +14,7 @@ results : dict = json.load(resultHandle)
 
 def updateArticles(cleaneadArticles: list) -> None:
     with open(resultPath, 'w') as fhandle:
-        fhandle.write(json.dumps(results, indent=4))
+        fhandle.write(json.dumps(cleaneadArticles, indent=4))
 
 
 if __name__ == '__main__':
@@ -25,6 +25,6 @@ if __name__ == '__main__':
             updateArticles(cleanedArticles)
             
         except KeyError:
-            print("No cleaner for this cleaner")
+            print("No cleaner for this Scraper")
        
         
