@@ -7,7 +7,7 @@ configPath: str = 'scraper\config\scraperConfig.json'
 configHandle = open(configPath, 'r')
 config: dict =  json.load(configHandle)
 
-resultPath: str  = 'scraper\\results\\scraperResults.json'
+resultPath: str  = './scraper\\results\\scraperResults.json'
 resultHandle = open(resultPath, 'r')
 results : dict = json.load(resultHandle)
 
