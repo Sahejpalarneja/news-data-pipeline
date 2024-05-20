@@ -3,12 +3,9 @@ import os
 import sys
 import logging
 
-SCRIPT_DIR = os.path.dirname(os.path.dirname(__file__))
-sys.path.append(os.path.dirname(SCRIPT_DIR))
-
 logging.basicConfig(filename="scraper/results/RunScraper.log", level=logging.INFO)
 
-from scraper.BaseScraper.BaseScraper import BaseScraper
+from BaseScraper.BaseScraper import BaseScraper
 from urllib.parse import urljoin
 
  
