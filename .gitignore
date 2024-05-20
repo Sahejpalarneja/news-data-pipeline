@@ -1,3 +1,5 @@
 .vscode/
 venv/
 __pycache__/
+scraper/results/scraperResults.json
+*.log
