@@ -1,9 +1,12 @@
 import json
 import os
 import sys
+import logging
 
 SCRIPT_DIR = os.path.dirname(os.path.dirname(__file__))
 sys.path.append(os.path.dirname(SCRIPT_DIR))
+
+logging.basicConfig(filename="scraper/results/RunScraper.log", level=logging.INFO)
 
 from scraper.BaseScraper.BaseScraper import BaseScraper
 from urllib.parse import urljoin
@@ -21,6 +24,7 @@ def getAllArticles(Outletscraper: BaseScraper) -> list: #TODO maybe method can b
             articles = [a['href'] for a in articles]
         else:
             articles = [urljoin(Outletscraper.URL, a['href']) for a in articles]
+    logging.info(f"Found {len(articles)} for {Outletscraper.URL}")
     # TODO add condition if no href but basename 
     return articles
 
@@ -40,7 +44,7 @@ def parseArticles(config, articles): #TODO Maybe method can be moved to the base
         articleScraper.getAttributes()
         articleScraper.writeResults(articleResult)
         count += 1
-        print(f"{count}/{len(articles)} articles scraped for {articleScraper.URL}")
+        logging.info(f"{count}/{len(articles)} articles scraped for {articleScraper.URL}")
     with open("scraper/results/scraperResults.json", "w") as resultHandle:
         resultHandle.write(json.dumps(articleResult, indent= 4))
 
@@ -50,4 +54,5 @@ if __name__ == '__main__':
         Outletscraper = BaseScraper(url, config)
         articles: list = getAllArticles(Outletscraper)
         parseArticles(config, articles)
+        logging.info("Scraping finished")
     
