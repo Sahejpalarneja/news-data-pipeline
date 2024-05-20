@@ -1,17 +1,24 @@
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
+import logging
+
+logging.basicConfig(filename="../results/BaseScraper.log", level=logging.INFO)
 
 
 class BaseScraper:
+
     def __init__(self, URL: str, config: str) -> None:
         self.URL = URL
         self.config = config
         headers: dict = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246"
         }
-        response = requests.get(URL, headers=headers)
-        self._soup = BeautifulSoup(response.text, "html.parser")
+        try:
+            response = requests.get(URL, headers=headers)
+            self._soup = BeautifulSoup(response.text, "html.parser")
+        except Exception:
+            logging.info(f"Could not set up Soup for {URL}")
         self.result: dict = self._setResult()
         self._functionMapping = {
         'title': 'getTitle',

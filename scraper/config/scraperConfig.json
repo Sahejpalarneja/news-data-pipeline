@@ -1,15 +1,4 @@
 {
-    "https://www.newsweek.com/": {
-        "articles": {
-            "selector": ".news-title > a",
-            "withBaseName": false,
-            "attribute": true
-        },
-        "attributes": {
-            "title" : ".article-header > h1" 
-        },
-        "cleaner": "NewsWeekCleaner"
-    },
     "https://www.nbcnews.com/":{
         "articles": {
             "selector": ".storyline__headline > a",
@@ -17,8 +6,52 @@
             "attribute": true
         },
         "attributes":{
-            "title": "head > title"
+            "title": {
+                "selector": "head > title"
+            },
+            "text":{
+                "selector": ".article-body__content > p",
+                "distributed": true
+            },
+            "date":{
+                "selector": "time",
+                "attribute": "content"
+            },
+            "image":{
+                "selector": "picture > img",
+                "attribute": "src"
+            },
+            "author":{
+                "selector":".byline-name"
+            }
         }
+    },
+    "https://www.newsweek.com/": {
+        "articles": {
+            "selector": ".news-title > a",
+            "withBaseName": false,
+            "attribute": true
+        },
+        "attributes": {
+            "title" : {
+                "selector": ".article-header > h1"
+            },
+            "text" : {
+                "selector": ".article-body > p",
+                "distributed": true
+            },
+            "date":{
+                "selector": ".article-header>.article_pubTime>time",
+                "attribute": "datetime"
+            },
+            "image":{
+                "selector": ".innerBox > picture > img",
+                "attribute": "src"
+            },
+            "author":{
+                "selector": ".author-name"
+            }
+        },
+        "cleaner": "NewsWeekCleaner"
     }
-    
 }
