@@ -24,7 +24,8 @@
             "author":{
                 "selector":".byline-name"
             }
-        }
+        },
+        "cleaner": "NBCCleaner"
     },
     "https://www.newsweek.com/": {
         "articles": {

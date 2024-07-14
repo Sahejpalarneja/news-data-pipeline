@@ -3,7 +3,7 @@ import os
 import sys
 import logging
 
-logging.basicConfig(filename="scraper/results/RunScraper.log", level=logging.INFO)
+logging.basicConfig(filename="scraper/results/RunScraper.log", level=logging.INFO, filemode = "w+")
 
 from BaseScraper.BaseScraper import BaseScraper
 from urllib.parse import urljoin
