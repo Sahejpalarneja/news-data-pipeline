@@ -24,12 +24,12 @@ def getAllArticles(Outletscraper: BaseScraper) -> list: #TODO maybe method can b
             articles = [a['href'] for a in articles] #if the url is in the arrtibutes of the html element
         else:
             articles = [urljoin(Outletscraper.URL, a['href']) for a in articles] #if the url needs the base url as a prefix
-    logging.info(f"Found {len(articles)} for {Outletscraper.URL}")
+    logging.info(f"Found {len(set(articles))} for {Outletscraper.URL}")
     # TODO add condition if no href but basename 
-    return articles
+    return set(articles)
 
 
-def parseArticles(config: dict, articles: list): #TODO Maybe method can be moved to the base class
+def parseArticles(config: dict, articles: set): #TODO Maybe method can be moved to the base class
     """Parses all articles based on the config of the base URL
     Args:
         config: dict of the config for the base URL
@@ -56,7 +56,7 @@ def parseArticles(config: dict, articles: list): #TODO Maybe method can be moved
 if __name__ == '__main__':
     for url, config in config.items():
         Outletscraper = BaseScraper(url, config)
-        articles: list = getAllArticles(Outletscraper)
+        articles: set = getAllArticles(Outletscraper)
         parseArticles(config, articles)
         logging.info("Scraping finished")
     

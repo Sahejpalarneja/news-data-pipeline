@@ -121,7 +121,6 @@ class BaseScraper:
         return value
     
 
-
     def getAuthor(self, attributeConfig: dict) -> str:
         selector = attributeConfig['selector']
         try:
