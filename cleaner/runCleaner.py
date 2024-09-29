@@ -15,7 +15,7 @@ results : dict = json.load(resultHandle)
 cleanedResultsPath: str = "cleaner/results/cleanedResults.json"
 
 def updateArticles(cleaneadArticles: list) -> None:
-    with open(cleanedResultsPath, 'w') as fhandle:
+    with open(cleanedResultsPath, 'w', encoding='ascii') as fhandle:
         fhandle.write(json.dumps(cleaneadArticles, indent=4))
 
 

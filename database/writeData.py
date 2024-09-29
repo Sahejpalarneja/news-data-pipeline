@@ -1,5 +1,8 @@
 import config
 import json
+import logging
+
+logging.basicConfig(filename="database/writer.log", level=logging.INFO, filemode = "w+")
 
 resultPath: str  = './cleaner/results/cleanedResults.json'
 resultHandle = open(resultPath, 'r', encoding='utf-8')
@@ -25,7 +28,7 @@ def createQuery(article: dict) -> str:
         query: query for the present values
     """
     query = "INSERT INTO public.articles("
-    for k,v in article.items():
+    for k,v in article.items(): #TODO remove value if not in use
         if article[k] != '':
             query += k + ','
     query = query[:-1] +') VALUES ('
@@ -36,7 +39,7 @@ def createQuery(article: dict) -> str:
     return query
 
 
-def addArticle(article: dict, cursor) -> None:
+def addArticle(article: dict, cursor) -> None: #TODO function is useless at he moment
     """Executes the query """
     query = createQuery(article)
     cursor.execute(query)
@@ -48,10 +51,19 @@ if __name__ == '__main__':
     with config.connect() as conn:
         cursor = conn.cursor()
         allTitles = getAllArticlesTitles(cursor)
+        count = 0
         for article in results:
-            if article['title']  not in allTitles: #check if the article is already present from the past
+            if article['title'] not in allTitles: #check if the article is already present from the past
                 #TODO Better way to differentiate between already written articles
-                addArticle(article, cursor)
-                conn.commit()
+                try:
+                    addArticle(article, cursor)
+                    count += 1
+                except Exception as ex:
+                    logging.warning(f"Could not add article to the DB: {article['title']}")
+                    logging.warning(f"Error was {ex}")
+            else:
+                logging.info(f"Article already in the DB, title: {article['title']}")
+            conn.commit()
+        logging.info(f"Added {count} articles to the DB")
 
     
