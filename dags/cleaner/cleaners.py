@@ -3,7 +3,7 @@ import re
 import unicodedata
 import unidecode
 
-logging.basicConfig(filename="cleaner/results/BaseCleaner.log", level=logging.INFO, filemode = "w+")
+logging.basicConfig(filename="dags/cleaner/results/BaseCleaner.log", level=logging.INFO, filemode = "w+")
 
 
 def normalize_text(text: str) -> str:

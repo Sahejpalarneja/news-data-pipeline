@@ -2,17 +2,11 @@ import json
 import cleaners
 import logging
 
-logging.basicConfig(filename="cleaner/results/Cleaner.log", level=logging.INFO)
+logging.basicConfig(filename="dags/cleaner/results/Cleaner.log", level=logging.INFO)
 
-configPath: str = '././scraper/config/scraperConfig.json'
-configHandle = open(configPath, 'r')
-config: dict =  json.load(configHandle)
-
-resultPath: str  = '././scraper/results/scraperResults.json'
-resultHandle = open(resultPath, 'r')
-results : dict = json.load(resultHandle)
-
-cleanedResultsPath: str = "cleaner/results/cleanedResults.json"
+configPath: str = 'dags/scraper/config/scraperConfig.json'
+resultPath: str  = 'dags/scraper/results/scraperResults.json'
+cleanedResultsPath: str = "dags/cleaner/results/cleanedResults.json"
 
 def updateArticles(cleaneadArticles: list) -> None:
     with open(cleanedResultsPath, 'w', encoding='ascii') as fhandle:
@@ -20,6 +14,9 @@ def updateArticles(cleaneadArticles: list) -> None:
 
 
 if __name__ == '__main__':
+    config: dict =  json.load(open(configPath, 'r'))
+    results: dict = json.load(open(resultPath, 'r'))
+
     cleanedArticles = []
     for url, config in config.items():
         try:
