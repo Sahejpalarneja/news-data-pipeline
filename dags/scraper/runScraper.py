@@ -1,13 +1,13 @@
 import json
 import logging
 
-logging.basicConfig(filename="scraper/results/RunScraper.log", level=logging.INFO, filemode = "w+")
+logging.basicConfig(filename="dags/scraper/results/RunScraper.log", level=logging.INFO, filemode = "w+")
 
 from BaseScraper.BaseScraper import BaseScraper
 from urllib.parse import urljoin
 
  
-configPath: str = '.\scraper\config\scraperConfig.json'
+configPath: str = 'dags\scraper\config\scraperConfig.json'
 configHandle = open(configPath, 'r').read()
 config: dict =  json.loads(configHandle)
 
@@ -35,7 +35,7 @@ def parseArticles(config: dict, articles: set): #TODO Maybe method can be moved 
         config: dict of the config for the base URL
         articles: list of the urls for the articles in the base URL"""
     try:
-        resultHandle = open("scraper/results/scraperResults.json", "r")
+        resultHandle = open("dags/scraper/results/scraperResults.json", "r")
         try:
             articleResult = json.load(resultHandle)
         except Exception:
@@ -49,7 +49,7 @@ def parseArticles(config: dict, articles: set): #TODO Maybe method can be moved 
         articleScraper.writeResults(articleResult)
         count += 1
         logging.info(f"{count}/{len(articles)} articles scraped for {articleScraper.URL}")
-    with open("scraper/results/scraperResults.json", "w") as resultHandle:
+    with open("dags/scraper/results/scraperResults.json", "w") as resultHandle:
         resultHandle.write(json.dumps(articleResult, indent= 4)) #Writing results for 1 base URL
 
 
