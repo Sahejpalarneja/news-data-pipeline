@@ -2,11 +2,9 @@ import config
 import json
 import logging
 
-logging.basicConfig(filename="database/writer.log", level=logging.INFO, filemode = "w+")
+logging.basicConfig(filename="dags/database/writer.log", level=logging.INFO, filemode = "w+")
+resultPath: str  = 'dags/cleaner/results/cleanedResults.json'
 
-resultPath: str  = './cleaner/results/cleanedResults.json'
-resultHandle = open(resultPath, 'r', encoding='utf-8')
-results : dict = json.load(resultHandle)
 
 def getAllArticlesTitles(cursor) -> list:
     """Gets the tiltes of all the currently present articles
@@ -39,15 +37,22 @@ def createQuery(article: dict) -> str:
     return query
 
 
-def addArticle(article: dict, cursor) -> None: #TODO function is useless at he moment
+def addArticle(article: dict, cursor, local_json_file: bool = False) -> None: #TODO function is useless at he moment
     """Executes the query """
     query = createQuery(article)
-    cursor.execute(query)
+    if local_json_file:
+        return query
+    else:
+        cursor.execute(query)
 
 if __name__ == '__main__':
     """
     Starting point of the writer
     """
+    results : dict = json.load(open(resultPath, 'r', encoding='utf-8'))
+    local_check = None
+    #local_check = open('dags/database/local_check.txt', 'a+') 
+
     with config.connect() as conn:
         cursor = conn.cursor()
         allTitles = getAllArticlesTitles(cursor)
@@ -56,14 +61,18 @@ if __name__ == '__main__':
             if article['title'] not in allTitles: #check if the article is already present from the past
                 #TODO Better way to differentiate between already written articles
                 try:
-                    addArticle(article, cursor)
+                    if local_check is None:
+                        addArticle(article, cursor)
+                    else:
+                        line = addArticle(article, cursor, True)
+                        local_check.write(line+'\n\n')
                     count += 1
                 except Exception as ex:
                     logging.warning(f"Could not add article to the DB: {article['title']}")
                     logging.warning(f"Error was {ex}")
             else:
                 logging.info(f"Article already in the DB, title: {article['title']}")
-            conn.commit()
+            if local_check is None:
+                conn.commit()
         logging.info(f"Added {count} articles to the DB")
-
     

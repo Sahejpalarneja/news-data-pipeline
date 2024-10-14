@@ -3,7 +3,7 @@ import os
 import psycopg2
 
 
-def load_config(filename: str='database\database.ini', section:str='postgresql'):
+def load_config(filename: str='dags\database\database.ini', section:str='postgresql'):
     parser = ConfigParser()
     parser.read(filename)
     
