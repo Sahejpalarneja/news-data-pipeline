@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 import logging
 
-logging.basicConfig(filename="../results/BaseScraper.log", level=logging.INFO)
+logging.basicConfig(filename="dags/scraper/results/BaseScraper.log", level=logging.INFO)
 
 
 class BaseScraper:
