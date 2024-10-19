@@ -3,13 +3,10 @@ import logging
 
 logging.basicConfig(filename="dags/scraper/results/RunScraper.log", level=logging.INFO, filemode = "w+")
 
-from BaseScraper.BaseScraper import BaseScraper
+from scraper.BaseScraper.BaseScraper import BaseScraper
 from urllib.parse import urljoin
 
- 
-configPath: str = 'dags\scraper\config\scraperConfig.json'
-configHandle = open(configPath, 'r').read()
-config: dict =  json.loads(configHandle)
+configPath: str = 'dags/scraper/config/scraperConfig.json'
 
 
 def getAllArticles(Outletscraper: BaseScraper) -> list: #TODO maybe method can be moved to the base class
@@ -53,7 +50,8 @@ def parseArticles(config: dict, articles: set): #TODO Maybe method can be moved 
         resultHandle.write(json.dumps(articleResult, indent= 4)) #Writing results for 1 base URL
 
 
-if __name__ == '__main__':
+def runScraper():
+    config: dict =  json.loads(open(configPath, 'r').read())
     for url, config in config.items():
         Outletscraper = BaseScraper(url, config)
         articles: set = getAllArticles(Outletscraper)

@@ -1,4 +1,4 @@
-import config
+from database import config
 import json
 import logging
 
@@ -45,7 +45,7 @@ def addArticle(article: dict, cursor, local_json_file: bool = False) -> None: #T
     else:
         cursor.execute(query)
 
-if __name__ == '__main__':
+def writeData():
     """
     Starting point of the writer
     """
@@ -75,4 +75,7 @@ if __name__ == '__main__':
             if local_check is None:
                 conn.commit()
         logging.info(f"Added {count} articles to the DB")
-    
+
+
+if __name__ == '__main__':
+    writeData()

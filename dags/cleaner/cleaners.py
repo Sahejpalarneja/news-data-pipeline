@@ -1,14 +1,14 @@
 import logging
 import re
 import unicodedata
-import unidecode
+#import unidecode
 
 logging.basicConfig(filename="dags/cleaner/results/BaseCleaner.log", level=logging.INFO, filemode = "w+")
 
 
 def normalize_text(text: str) -> str:
     text = unicodedata.normalize("NFKD", text)
-    text = unidecode.unidecode(text)
+    #text = unidecode.unidecode(text)
     text = re.sub('"', ' ', text)
     text = re.sub("'", ' ', text)
     return text

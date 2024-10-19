@@ -1,5 +1,5 @@
 import json
-import cleaners
+from cleaner import cleaners
 import logging
 
 logging.basicConfig(filename="dags/cleaner/results/Cleaner.log", level=logging.INFO)
@@ -13,7 +13,7 @@ def updateArticles(cleaneadArticles: list) -> None:
         fhandle.write(json.dumps(cleaneadArticles, indent=4))
 
 
-if __name__ == '__main__':
+def runCleaner():
     config: dict =  json.load(open(configPath, 'r'))
     results: dict = json.load(open(resultPath, 'r'))
 
