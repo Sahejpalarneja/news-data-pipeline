@@ -9,6 +9,7 @@ resultPath: str  = 'dags/scraper/results/scraperResults.json'
 cleanedResultsPath: str = "dags/cleaner/results/cleanedResults.json"
 
 def updateArticles(cleaneadArticles: list) -> None:
+    #Create a new output file for cleaned articles
     with open(cleanedResultsPath, 'w', encoding='ascii') as fhandle:
         fhandle.write(json.dumps(cleaneadArticles, indent=4))
 
@@ -21,6 +22,7 @@ def runCleaner():
     for url, config in config.items():
         try:
             if 'cleaner' in config.keys():
+                #Convert string to class object
                 cl = getattr(cleaners, config['cleaner'])(results, url)
                 cleanedArticles += cl.clean()
             else:

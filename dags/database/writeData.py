@@ -15,7 +15,7 @@ def getAllArticlesTitles(cursor) -> list:
     """
     query = "SELECT title FROM articles"
     cursor.execute(query)
-    return [x[0] for x in cursor.fetchall()]
+    return [x[0] for x in cursor.fetchall()]  # creates a list of articles
 
 
 def createQuery(article: dict) -> str:
@@ -51,6 +51,7 @@ def writeData():
     """
     results : dict = json.load(open(resultPath, 'r', encoding='utf-8'))
     local_check = None
+    # Only used to check locally if all input is correct
     #local_check = open('dags/database/local_check.txt', 'a+') 
 
     with config.connect() as conn:

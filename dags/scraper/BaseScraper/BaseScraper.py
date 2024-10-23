@@ -7,10 +7,15 @@ logging.basicConfig(filename="dags/scraper/results/BaseScraper.log", level=loggi
 
 
 class BaseScraper:
+    """
+    I use only 1 scraper to scrape all the outlets. 
+    All information needed to scrape the data is unique to each outlet and is mentioned in the scraper config.
+    """
 
     def __init__(self, URL: str, config: str) -> None:
         self.URL = URL
         self.config = config
+        #Some website require the user agent header to be specified to allow access
         headers: dict = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246"
         }
@@ -29,6 +34,10 @@ class BaseScraper:
         }
 
     def getAttributes(self):
+        """
+        reads all the attributes to be scraped from the config.
+        Stores the scraped attribute in the result object
+        """
         attributes = self.config["attributes"]
         self.result["URL"] = self.URL
         for attribute, config in attributes.items():
@@ -54,6 +63,10 @@ class BaseScraper:
 
 
     def getAttributeFromSoup(self, name: str, attributeConfig: dict):
+        """
+        Calls the method responsible for getting the attribute
+        provides it the config for that attribute
+        """
         functionName = self._functionMapping.get(name)
         function = getattr(self, functionName)
         return function(attributeConfig)
