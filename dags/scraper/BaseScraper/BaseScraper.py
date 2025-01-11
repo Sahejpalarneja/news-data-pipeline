@@ -52,6 +52,7 @@ class BaseScraper:
 
     def _setResult(self) -> dict:
         result: dict = {}
+        result["baseURL"] = self.URL
         result["URL"] = ""
         result["title"] = ""
         result["lead"] = ""
