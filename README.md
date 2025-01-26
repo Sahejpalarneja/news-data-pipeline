@@ -13,10 +13,13 @@ Objective of the project is to create a data pipeline which would run pyton scri
 		- You can find a better comparison here: https://stackshare.io/stackups/airflow-vs-jenkins
 - **Docker**
 	- We use the docker image for airflow, its dependencies
+	- To run Grafana 
 - **Azure Virtual Machine**
 	- Deploying docker image for the airflow scheduler
 - **Azure Database for PostgreSQL servers**
 	- Storage for the scraped data
+- **Grafana**
+	- Used for monitoring the scraping and statistics for articles scraped
 
 ## Infrastructure
 
@@ -42,3 +45,7 @@ Also the errors in scraping any of the attributes
 
 ![database-writer](<./img/database-writer.png>)
 The Database writer log also shows if an article is already present in the DB and if we had any issues writing to the DB
+
+## Monitoring
+The pipeline has a grafana dashboard with the daily scraping statistcs
+![grafana-dashboard](./img/grafana.png)
